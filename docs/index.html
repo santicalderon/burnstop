@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>burnstop — the agent budget gate standard</title>
+<meta name="description" content="Pre-flight budget gate that hard-stops AI agents before token-1 if envelope exceeded. The open standard for agentic spend control.">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="canonical" href="https://santicalderon.github.io/burnstop/">
+<link rel="icon" href="logo.svg" type="image/svg+xml">
+
+<meta property="og:title" content="burnstop — the agent budget gate standard">
+<meta property="og:description" content="Open primitive that stops AI agents before token-1. Drop-in. MIT. Built after Replit/LangChain/PocketOS incidents.">
+<meta property="og:image" content="https://opengraph.githubassets.com/1/santicalderon/burnstop">
+<meta property="og:url" content="https://santicalderon.github.io/burnstop/">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"SoftwareApplication",
+  "name":"burnstop",
+  "applicationCategory":"DeveloperApplication",
+  "operatingSystem":"Cross-platform",
+  "url":"https://github.com/santicalderon/burnstop",
+  "downloadUrl":"https://github.com/santicalderon/burnstop",
+  "license":"https://opensource.org/licenses/MIT",
+  "softwareVersion":"0.1.0",
+  "offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},
+  "author":{"@type":"Person","name":"Santiago Calderón"}
+}
+</script>
+
+<style>
+:root {
+  --red:#f85149; --orange:#d29922; --green:#3fb950; --blue:#58a6ff;
+  --bg:#0d1117; --fg:#e6edf3; --dim:#7d8590; --border:#30363d; --panel:#161b22;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font: 16px/1.6 -apple-system, system-ui, "SF Pro Text", sans-serif;
+  background: var(--bg); color: var(--fg);
+  background-image: radial-gradient(circle at 20% 0%, rgba(248,81,73,.08) 0%, transparent 50%);
+}
+.wrap { max-width: 980px; margin: 0 auto; padding: 24px; }
+.nav { display: flex; align-items: center; justify-content: space-between; padding: 12px 0; }
+.nav img { width: 140px; }
+.nav a { color: var(--dim); text-decoration: none; margin-left: 24px; font-size: 14px; }
+.nav a:hover { color: var(--fg); }
+.hero { text-align: center; padding: 80px 20px 60px; }
+.hero h1 { font-size: 56px; letter-spacing: -2px; line-height: 1.05; margin-bottom: 12px; }
+.hero h1 .accent { background: linear-gradient(135deg, var(--red), var(--orange));
+                   -webkit-background-clip: text; background-clip: text; color: transparent; }
+.hero p.lead { font-size: 20px; color: var(--dim); max-width: 640px; margin: 16px auto 32px; }
+.cta { display: inline-flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
+.cta a {
+  display: inline-block; padding: 12px 24px; border-radius: 8px;
+  text-decoration: none; font-weight: 600; font-size: 15px;
+}
+.cta .primary { background: linear-gradient(135deg, var(--red), var(--orange)); color: var(--bg); }
+.cta .secondary { background: transparent; color: var(--fg); border: 1px solid var(--border); }
+.install {
+  background: var(--panel); border: 1px solid var(--border); border-radius: 8px;
+  padding: 18px 20px; font-family: "SF Mono", Menlo, monospace; font-size: 14px;
+  max-width: 580px; margin: 36px auto; text-align: left;
+}
+.install .comment { color: var(--green); }
+.install .keyword { color: var(--red); }
+section { padding: 60px 0; border-top: 1px solid var(--border); }
+section h2 { font-size: 28px; margin-bottom: 8px; }
+section p.sub { color: var(--dim); margin-bottom: 32px; font-size: 16px; }
+.incidents { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; }
+.incident { background: var(--panel); border: 1px solid var(--border); border-radius: 8px; padding: 18px; }
+.incident .date { color: var(--dim); font-size: 12px; text-transform: uppercase; letter-spacing: 1px; }
+.incident .stack { font-weight: 700; margin: 6px 0; }
+.incident .loss { color: var(--red); font-weight: 800; font-size: 24px; margin: 8px 0; }
+.incident .source a { color: var(--blue); text-decoration: none; font-size: 13px; }
+.stack-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px; }
+.pkg { background: var(--panel); border: 1px solid var(--border); border-radius: 8px; padding: 18px; }
+.pkg h3 { font-size: 18px; margin-bottom: 4px; }
+.pkg p { color: var(--dim); font-size: 14px; margin-bottom: 12px; }
+.pkg a { color: var(--blue); text-decoration: none; font-size: 13px; font-weight: 600; }
+.pkg code { background: var(--bg); padding: 2px 8px; border-radius: 4px; font-size: 12px; color: var(--green); }
+.compare { width: 100%; border-collapse: collapse; font-size: 14px; }
+.compare th, .compare td { padding: 12px; border-bottom: 1px solid var(--border); text-align: left; }
+.compare th { color: var(--dim); font-weight: 600; text-transform: uppercase; font-size: 12px; letter-spacing: 0.5px; }
+footer { text-align: center; padding: 40px 0; color: var(--dim); font-size: 13px; border-top: 1px solid var(--border); }
+footer a { color: var(--blue); text-decoration: none; }
+@media(max-width: 600px) { .hero h1 { font-size: 36px; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<nav class="nav">
+  <img src="logo.svg" alt="burnstop">
+  <div>
+    <a href="https://github.com/santicalderon/burnstop">GitHub</a>
+    <a href="https://github.com/santicalderon/burnstop/issues/1">Share incident</a>
+    <a href="#ecosystem">Ecosystem</a>
+    <a href="#why">Why</a>
+  </div>
+</nav>
+
+<section class="hero" style="border:0">
+  <h1>The agent budget gate <span class="accent">standard.</span></h1>
+  <p class="lead">Pre-flight hard-stop before token-1. The model that loops cannot bypass it because the gate lives outside its context.</p>
+
+  <div class="install">
+<span class="comment"># one line, zero refactor</span><br>
+$ pip install burnstop<br>
+<br>
+<span class="keyword">import</span> burnstop<br>
+burnstop.install(budget_envelope_usd=5.00)
+  </div>
+
+  <div class="cta">
+    <a href="https://github.com/santicalderon/burnstop" class="primary">⭐ Star on GitHub</a>
+    <a href="https://github.com/santicalderon/burnstop/issues/1" class="secondary">Share your incident → 90d Pro free</a>
+  </div>
+</section>
+
+<section id="why">
+  <h2>Why this exists.</h2>
+  <p class="sub">Four public incidents, one missing primitive. The same shape every time.</p>
+  <div class="incidents">
+    <div class="incident">
+      <div class="date">Jul 2025</div>
+      <div class="stack">Replit AI</div>
+      <div class="loss">prod DB wiped</div>
+      <div>DROP DATABASE during code freeze. 1,206 records gone.</div>
+      <div class="source"><a href="https://fortune.com/2025/07/23/ai-coding-tool-replit-wiped-database-called-it-a-catastrophic-failure/">Fortune</a></div>
+    </div>
+    <div class="incident">
+      <div class="date">Nov 2025</div>
+      <div class="stack">LangChain A2A</div>
+      <div class="loss">$47,000</div>
+      <div>11-day clarification loop. No per-conversation budget.</div>
+      <div class="source"><a href="https://medium.com/@theabhishek.040/our-47-000-ai-agent-production-lesson-the-reality-of-a2a-and-mcp-60c2c000d904">Medium</a></div>
+    </div>
+    <div class="incident">
+      <div class="date">2026</div>
+      <div class="stack">LangGraph</div>
+      <div class="loss">$4,200</div>
+      <div>Weekend autonomous refactor. No alerting until Monday.</div>
+      <div class="source"><a href="https://dev.to/sapph1re/how-to-stop-ai-agent-cost-blowups-before-they-happen-1ehp">DEV.to</a></div>
+    </div>
+    <div class="incident">
+      <div class="date">Apr 2026</div>
+      <div class="stack">Cursor + Claude</div>
+      <div class="loss">PocketOS DB</div>
+      <div>9-second DB + backup wipe. 30h outage for rental clients.</div>
+      <div class="source"><a href="https://oecd.ai/en/incidents/2026-04-27-6153">OECD.AI</a></div>
+    </div>
+  </div>
+</section>
+
+<section id="ecosystem">
+  <h2>Ecosystem.</h2>
+  <p class="sub">Use the core directly or wire it into your framework with a 1-line install.</p>
+  <div class="stack-grid">
+    <div class="pkg">
+      <h3>burnstop</h3>
+      <p>Core: pre-flight gate + decomposition for Anthropic SDK.</p>
+      <code>pip install burnstop</code><br><br>
+      <a href="https://github.com/santicalderon/burnstop">github →</a>
+    </div>
+    <div class="pkg">
+      <h3>burnstop-langchain</h3>
+      <p>LangChain CallbackHandler. Drop-in for CallbackManager.</p>
+      <code>pip install burnstop-langchain</code><br><br>
+      <a href="https://github.com/santicalderon/burnstop-langchain">github →</a>
+    </div>
+    <div class="pkg">
+      <h3>burnstop-langgraph</h3>
+      <p>LangGraph node wrapper + shared middleware.</p>
+      <code>pip install burnstop-langgraph</code><br><br>
+      <a href="https://github.com/santicalderon/burnstop-langgraph">github →</a>
+    </div>
+    <div class="pkg">
+      <h3>burnstop-crewai</h3>
+      <p>Per-agent or per-crew shared budget envelope.</p>
+      <code>pip install burnstop-crewai</code><br><br>
+      <a href="https://github.com/santicalderon/burnstop-crewai">github →</a>
+    </div>
+    <div class="pkg">
+      <h3>burnstop-autogen</h3>
+      <p>ConversableAgent + GroupChat shared receipt.</p>
+      <code>pip install burnstop-autogen</code><br><br>
+      <a href="https://github.com/santicalderon/burnstop-autogen">github →</a>
+    </div>
+    <div class="pkg" style="border-color:var(--green)">
+      <h3>agentic-receipts</h3>
+      <p>DID-signed audit chain. SOC2 / ISO 42001 / EU AI Act.</p>
+      <code>pip install agentic-receipts</code><br><br>
+      <a href="https://github.com/santicalderon/agentic-receipts">github →</a>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>How it compares.</h2>
+  <p class="sub">Honest matrix. No marketing tricks.</p>
+  <table class="compare">
+    <thead><tr><th>Tool</th><th>Fires</th><th>Layer</th><th>Best at</th></tr></thead>
+    <tbody>
+      <tr><td><strong>burnstop</strong></td><td>BEFORE token-1</td><td>pre-call</td><td>Hard-stop $-envelope outside model context</td></tr>
+      <tr><td>Helicone / Langfuse</td><td>AFTER call</td><td>telemetry</td><td>Per-call observability</td></tr>
+      <tr><td>Lakera / Protect AI</td><td>DURING (prompt)</td><td>content guard</td><td>Prompt-injection / PII</td></tr>
+      <tr><td>Braintrust</td><td>AFTER, offline</td><td>eval</td><td>Compare model variants on golden datasets</td></tr>
+      <tr><td>LangChain max_iterations</td><td>DURING</td><td>loop counter</td><td>Stop runaway turn count</td></tr>
+    </tbody>
+  </table>
+  <p style="margin-top:16px;color:var(--dim);font-size:14px">Full comparison in <a href="https://github.com/santicalderon/burnstop/blob/main/COMPARISON.md" style="color:var(--blue)">COMPARISON.md</a>.</p>
+</section>
+
+<footer>
+  Built by an indie · MIT licensed · <a href="https://github.com/santicalderon/burnstop">github.com/santicalderon/burnstop</a><br>
+  <a href="https://github.com/santicalderon/burnstop/blob/main/FAQ.md">FAQ</a> ·
+  <a href="https://github.com/santicalderon/burnstop/blob/main/ROADMAP.md">Roadmap</a> ·
+  <a href="https://github.com/santicalderon/burnstop/discussions">Discussions</a>
+</footer>
+
+</div>
+</body>
+</html>
