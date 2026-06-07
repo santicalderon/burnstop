@@ -76,9 +76,9 @@ See [AGENT_CARD.md](./AGENT_CARD.md) for the substrate this is built on.
 
 ## Ecosystem
 
-- [burnstop-langchain](https://github.com/santicalderon/burnstop-langchain) — LangChain callback adapter (drop-in for `CallbackManager`)
-- burnstop-langgraph (coming) — LangGraph hook
-- burnstop-crewai (coming) — CrewAI middleware
+- [burnstop-langchain](https://github.com/santicalderon/burnstop-langchain) — LangChain callback adapter
+- [burnstop-langgraph](https://github.com/santicalderon/burnstop-langgraph) — LangGraph node wrapper + shared middleware
+- [burnstop-crewai](https://github.com/santicalderon/burnstop-crewai) — per-agent / per-crew budget gate
 
 ## License
 
