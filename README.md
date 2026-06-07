@@ -74,6 +74,12 @@ except BudgetExceeded as e:
 
 See [AGENT_CARD.md](./AGENT_CARD.md) for the substrate this is built on.
 
+## Ecosystem
+
+- [burnstop-langchain](https://github.com/santicalderon/burnstop-langchain) — LangChain callback adapter (drop-in for `CallbackManager`)
+- burnstop-langgraph (coming) — LangGraph hook
+- burnstop-crewai (coming) — CrewAI middleware
+
 ## License
 
 MIT — see [LICENSE](./LICENSE).
