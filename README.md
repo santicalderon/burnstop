@@ -83,3 +83,14 @@ See [AGENT_CARD.md](./AGENT_CARD.md) for the substrate this is built on.
 ## License
 
 MIT — see [LICENSE](./LICENSE).
+
+---
+
+## Built on kernel
+
+burnstop is part of the [kernel](https://github.com/santicalderon/kernel) autonomous AI Business substrate.
+
+- 🌐 **kernel** → [kernel.mi-kernel2026.xyz](https://kernel.mi-kernel2026.xyz/)
+- 📋 **AI Business Audit** $499 → [/audit/](https://kernel.mi-kernel2026.xyz/audit/)
+- 🔁 **InvoiceChaser** $14.50/mo → [/invoicechaser/](https://kernel.mi-kernel2026.xyz/invoicechaser/)
+- 📰 **Reviews + newsletter** → [/reviews/](https://kernel.mi-kernel2026.xyz/reviews/)
