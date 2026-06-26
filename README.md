@@ -3,7 +3,6 @@
 > **Stop AI agents from burning your money.** Pre-flight budget gate. Hard-stop before token-1. ~$0.001 per check.
 
 [![test](https://github.com/santicalderon/burnstop/actions/workflows/test.yml/badge.svg)](https://github.com/santicalderon/burnstop/actions/workflows/test.yml)
-[![PyPI](https://img.shields.io/pypi/v/burnstop.svg)](https://pypi.org/project/burnstop/)
 [![MIT](https://img.shields.io/badge/license-MIT-blue.svg)](./LICENSE)
 
 ```bash
