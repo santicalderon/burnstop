@@ -2,6 +2,8 @@
 
 > **Stop AI agents from burning your money.** Pre-flight budget gate. Hard-stop before token-1. ~$0.001 per check.
 
+I built this after my own autonomous platform hit runaway LLM costs — loops that looked like progress but were burning through budget with zero output. The model causing the loop is the same one you'd ask to self-throttle. That doesn't work. burnstop is the primitive that lives *outside* the model's context.
+
 [![test](https://github.com/santicalderon/burnstop/actions/workflows/test.yml/badge.svg)](https://github.com/santicalderon/burnstop/actions/workflows/test.yml)
 [![MIT](https://img.shields.io/badge/license-MIT-blue.svg)](./LICENSE)
 
