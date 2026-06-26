@@ -8,7 +8,11 @@ I built this after my own autonomous platform hit runaway LLM costs — loops th
 [![MIT](https://img.shields.io/badge/license-MIT-blue.svg)](./LICENSE)
 
 ```bash
-pip install burnstop
+# Via GitHub (available now):
+pip install git+https://github.com/santicalderon/burnstop
+
+# Via PyPI (coming soon):
+# pip install burnstop
 ```
 
 ```python
