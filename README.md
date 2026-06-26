@@ -50,6 +50,20 @@ $ burnstop demo --budget 0.30
 [burnstop] 402 BUDGET_EXCEEDED: would_spend=$0.0442 envelope_left=$0.0390
 ```
 
+
+## Framework adapters
+
+burnstop ships as a core library + drop-in adapters for every major agent framework:
+
+| Adapter | Install | Framework |
+|---|---|---|
+| [burnstop-langchain](https://github.com/santicalderon/burnstop-langchain) | `pip install burnstop-langchain` | LangChain callbacks |
+| [burnstop-langgraph](https://github.com/santicalderon/burnstop-langgraph) | `pip install burnstop-langgraph` | LangGraph nodes |
+| [burnstop-autogen](https://github.com/santicalderon/burnstop-autogen) | `pip install burnstop-autogen` | AutoGen agents |
+| [burnstop-crewai](https://github.com/santicalderon/burnstop-crewai) | `pip install burnstop-crewai` | CrewAI crews |
+
+Each adapter wraps the same `Receipt` primitive — one budget envelope, same `BudgetExceeded` exception, works across frameworks.
+
 ## Manual usage (without monkey-patch)
 
 ```python
